@@ -18,26 +18,26 @@ print(data_set["target"].value_counts())
 
 # Visualize the features of the Data_set
 
-# feature_1 = data_set["sepal_length"]
-# plt.boxplot(feature_1)
-# plt.xlabel("sepal_length")
-# plt.ylabel("cm")
-# plt.show()
+feature_1 = data_set["sepal_length"]
+plt.boxplot(feature_1)
+plt.xlabel("sepal_length")
+plt.ylabel("cm")
+plt.show()
 
 # Visualize target scatter (one color per species)
 
-# colors = {"Iris-setosa": "red", "Iris-versicolor": "green", "Iris-virginica": "blue"}
-# for species, group in data_set.groupby("target"):
-#     plt.scatter(
-#         group["petal_length"],
-#         group["petal_width"],
-#         color=colors[species],
-#         label=species,
-#     )
-# plt.xlabel("petal_length (cm)")
-# plt.ylabel("petal_width (cm)")
-# plt.legend()
-# plt.show()
+colors = {"Iris-setosa": "red", "Iris-versicolor": "green", "Iris-virginica": "blue"}
+for species, group in data_set.groupby("target"):
+    plt.scatter(
+        group["petal_length"],
+        group["petal_width"],
+        color=colors[species],
+        label=species,
+    )
+plt.xlabel("petal_length (cm)")
+plt.ylabel("petal_width (cm)")
+plt.legend()
+plt.show()
 
 # Split Data_Set Train (80%), Test(20%)
 x = data_set.loc[:, 'sepal_length':'petal_width']
@@ -55,12 +55,14 @@ predictions = model.predict(X_test)
 print(predictions)
 
 # Evaluate the model
+
 accuracy = accuracy_score(y_test, predictions)
 precision = precision_score(y_test, predictions, average="macro")
 print(f"Accuracy: {accuracy:.2f}")
 print(f"Precision (macro avg): {precision:.2f}")
 
 # Scatter of predicted species only (test set)
+
 colors = {"Iris-setosa": "red", "Iris-versicolor": "green", "Iris-virginica": "blue"}
 for species in model.classes_:
     mask = predictions == species
